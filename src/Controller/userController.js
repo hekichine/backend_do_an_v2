@@ -66,8 +66,8 @@ const userController = {
   },
   delete: (req, res) => {
     let id = req.params.id;
-    connection.query("delete from user where id =?", [id], (err, rows) => {
-      if (!err) {
+    connection.query("delete from user where id =?", id, (err, rows) => {
+      if (!err && rows.affectedRows > 0) {
         return res.status(200).json({
           message: "Delete success",
           error: 0,
@@ -81,6 +81,7 @@ const userController = {
   },
   update: (req, res) => {
     let user = req.body;
+
     connection.query(
       "update user set ? where id =?",
       [user, user.id],

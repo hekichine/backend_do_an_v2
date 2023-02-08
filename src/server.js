@@ -15,6 +15,7 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(bp.urlencoded({ extended: true }));
+app.use("", express.static("../Images/users"));
 
 initWebRoute(app);
 

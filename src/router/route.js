@@ -1,5 +1,6 @@
 import express from "express";
 import userController from "../Controller/userController";
+import upload from "../middleware/upload";
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ const initWebRoute = (app) => {
   //login
   router.post("/login", userController.login);
   //delete user
-  router.post("/delete/:id", userController.delete);
+  router.delete("/delete/:id", userController.delete);
   //update user
   router.post("/update", userController.update);
 
