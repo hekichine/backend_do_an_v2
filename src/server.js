@@ -4,7 +4,8 @@ import cookieParser from "cookie-parser";
 import bp from "body-parser";
 import initProductRoute from "./router/routeProduct";
 
-import initWebRoute from "./router/route";
+import initUserRoute from "./router/routeUser";
+import initWebRouter from "./router/webRouter";
 
 require("dotenv").config();
 
@@ -18,7 +19,9 @@ app.use(express.json());
 app.use(bp.urlencoded({ extended: true }));
 app.use("", express.static("uploads"));
 
-initWebRoute(app);
+//router
+initWebRouter(app);
+initUserRoute(app);
 initProductRoute(app);
 
 app.listen(port, () => {

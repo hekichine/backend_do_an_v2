@@ -46,20 +46,27 @@ const userController = {
   },
   login: (req, res) => {
     let user = req.body;
+
     connection.query(
       "select * from user where username =? and password =?",
       [user.username, user.password],
       (err, rows) => {
-        if (rows.length == 0) {
+        if (!err) {
+          if (rows.length == 0) {
+            return res.status(200).json({
+              message: "Account does not exist",
+              error: 1,
+            });
+          }
           return res.status(200).json({
-            message: "Account does not exist",
-            error: 1,
+            message: "Login success",
+            error: 0,
+            user_info: rows,
           });
         }
         return res.status(200).json({
-          message: "Login success",
-          error: 0,
-          user_info: rows,
+          message: "Server is shutdown",
+          error: 1,
         });
       }
     );
@@ -81,7 +88,9 @@ const userController = {
   },
   update: (req, res) => {
     let user = req.body;
-
+    user.user_avt = req.file.originalname;
+    // console.log(user);
+    // return;
     connection.query(
       "update user set ? where id =?",
       [user, user.id],

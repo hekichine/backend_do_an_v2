@@ -5,7 +5,7 @@ import connection from "../connectDB/connect";
 
 const router = express.Router();
 
-const initWebRoute = (app) => {
+const initUserRoute = (app) => {
   router.get("/", (req, res) => {
     res.status(200).json({
       status: 200,
@@ -45,4 +45,4 @@ const initWebRoute = (app) => {
   app.use("/api/user", router);
 };
 
-export default initWebRoute;
+export default initUserRoute;
