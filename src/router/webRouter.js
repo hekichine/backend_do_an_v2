@@ -31,6 +31,21 @@ const initWebRouter = (app) => {
       update: "api/order/update",
       delete: "api/order/delete/:id ! Not recommend",
       add: "api/order/add",
+      k: "=====================COMMENT===================",
+      getall: "api/comment/getall",
+      delete: "api/comment/delete/:id",
+      j: "================COLLECTION==================",
+      getall: "api/collection/getall",
+      findId: "api/collection/:id",
+      add: "api/collection/add",
+      update: "api/collection/update",
+      delete: "api/collection/delete/:id",
+      h: "====================COLLECTION DETAIL=============",
+      add: "api/collectiondetail/add",
+      getall: "api/collectiondetail/getall",
+      delete: "api/collectiondetail/delete/:id",
+      findId: "api/collectiondetail/:id",
+      update: "",
     });
   });
   app.use("/", router);
