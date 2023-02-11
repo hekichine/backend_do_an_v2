@@ -1,112 +1,38 @@
 import connection from "../connectDB/connect";
-const userController = {
-  register: (req, res) => {
-    let user = req.body;
+import service from "../service/service";
 
-    connection.query(
-      "select * from user where username =?",
-      [user.username],
-      (err, rows) => {
-        if (rows.length > 0) {
-          return res.status(200).json({
-            message: "Account exist",
-            error: 1,
-          });
-        }
-        connection.query("insert into user set ?", [user], (err, rows) => {
-          if (!err) {
-            return res.status(200).json({
-              message: "Create successfully",
-              error: 0,
-            });
-          }
-          return res.status(200).json({
-            message: "Server error",
-            error: 1,
-          });
-        });
-      }
-    );
+const userController = {
+  signup: (req, res) => {
+    let user = req.body;
+    let sql1 = "select * from users where username =?";
+    let sql2 = "insert into users set ?";
+    let search = req.body.username;
+    let message = "Account exists";
+    service.signup(res, connection, sql1, sql2, search, user, message);
   },
 
   getAll: (req, res) => {
-    connection.query("select * from user", (err, rows) => {
-      if (!err) {
-        return res.status(200).json({
-          message: "all user",
-          error: 0,
-          list_user: rows,
-        });
-      }
-      return res.status(200).json({
-        message: "Server error",
-        error: 1,
-      });
-    });
+    let sql = "select * from users";
+    let message = "get all users";
+    service.getall(res, sql, connection, message);
   },
-  login: (req, res) => {
+  signin: (req, res) => {
     let user = req.body;
-
-    connection.query(
-      "select * from user where username =? and password =?",
-      [user.username, user.password],
-      (err, rows) => {
-        if (!err) {
-          if (rows.length == 0) {
-            return res.status(200).json({
-              message: "Account does not exist",
-              error: 1,
-            });
-          }
-          return res.status(200).json({
-            message: "Login success",
-            error: 0,
-            user_info: rows,
-          });
-        }
-        return res.status(200).json({
-          message: "Server is shutdown",
-          error: 1,
-        });
-      }
-    );
+    let sql = "select * from users where username =? and password =?";
+    service.signin(res, connection, sql, user);
   },
   delete: (req, res) => {
     let id = req.params.id;
-    connection.query("delete from user where id =?", id, (err, rows) => {
-      if (!err && rows.affectedRows > 0) {
-        return res.status(200).json({
-          message: "Delete success",
-          error: 0,
-        });
-      }
-      return res.status(200).json({
-        message: "Delete error",
-        error: 1,
-      });
-    });
+    let sql = "delete from users where id =?";
+    service.delete(res, connection, sql, id);
   },
   update: (req, res) => {
     let user = req.body;
-    user.user_avt = req.file.originalname;
-    // console.log(user);
-    // return;
-    connection.query(
-      "update user set ? where id =?",
-      [user, user.id],
-      (err, rows) => {
-        if (!err) {
-          return res.status(200).json({
-            message: "Update success",
-            error: 0,
-          });
-        }
-        return res.status(200).json({
-          message: "Update failed",
-          error: 1,
-        });
-      }
-    );
+    if (req.file && req.file.originalname) {
+      user.user_avt = req.file.originalname;
+    }
+    let sql = "update users set ? where id =?";
+    service.update(res, connection, sql, user);
   },
 };
 

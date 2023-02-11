@@ -12,36 +12,16 @@ const initUserRoute = (app) => {
       message: "api book store",
     });
   });
-  router.get("/getalluser", userController.getAll);
+  router.get("/getall", userController.getAll);
   // register
-  router.post("/register", userController.register);
+  router.post("/signup", userController.signup);
   //login
-  router.post("/login", userController.login);
+  router.post("/signin", userController.signin);
   //delete user
   router.delete("/delete/:id", userController.delete);
   //update user
   router.post("/update", upload.single("user_avt"), userController.update);
 
-  // test upload image
-  router.post("/img", upload.single("image"), (req, res) => {
-    let img = req.body;
-    console.log(req.file);
-    connection.query(
-      "insert into imageproduct set ?",
-      [img.image],
-      (err, rows) => {
-        if (!err) {
-          return res.status(200).json({
-            message: "ok",
-          });
-        }
-        return res.status(200).json({
-          message: "err",
-          err,
-        });
-      }
-    );
-  });
   app.use("/api/user", router);
 };
 

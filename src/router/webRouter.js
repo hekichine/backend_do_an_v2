@@ -45,7 +45,7 @@ const initWebRouter = (app) => {
       getall: "api/collectiondetail/getall",
       delete: "api/collectiondetail/delete/:id",
       findId: "api/collectiondetail/:id",
-      update: "",
+      update: "api/collectiondetail/update",
     });
   });
   app.use("/", router);

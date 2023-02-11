@@ -1,5 +1,4 @@
 import express from "express";
-import connection from "../connectDB/connect";
 import productController from "../Controller/productController";
 
 const router = express.Router();
@@ -11,10 +10,12 @@ const initProductRoute = (app) => {
       message: "api product book store ",
     });
   });
-  //product detail
-  router.get("/getSingleProduct/:id", productController.getSingleProduct);
-  //get all product
+  // get all product
   router.get("/getall", productController.getAll);
+  // find by id
+  router.get("/findId/:id", productController.findId);
+  //create product
+  router.post("/add", productController.create);
 
   app.use("/api/product", router);
 };

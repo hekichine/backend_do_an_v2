@@ -4,7 +4,7 @@ let connection = mysql.createPool({
   host: "localhost",
   user: "root",
   password: "",
-  database: "db_do_an_v2",
+  database: "data_do_an",
   waitForConnections: true,
   connectionLimit: 10,
   maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`

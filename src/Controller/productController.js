@@ -1,36 +1,25 @@
 import connection from "../connectDB/connect";
+import service from "../service/service";
 const productController = {
-  getSingleProduct: (req, res) => {
-    let id = req.params;
-
-    connection.query("select * from product where id =?", [id], (err, rows) => {
-      if (!err) {
-        return res.status(200).json({
-          message: "Single product",
-          error: 0,
-          product_detail: rows,
-        });
-      }
-      return res.status(200).json({
-        message: "Server error",
-        error: 1,
-      });
-    });
-  },
   getAll: (req, res) => {
-    connection.query("select * from product", (err, rows) => {
-      if (!err) {
-        return res.status(200).json({
-          message: "Get all product",
-          error: 0,
-          product_list: rows,
-        });
-      }
-      return res.status(200).json({
-        message: "Server error",
-        error: 1,
-      });
-    });
+    let sql = "select * from products";
+
+    let message = "Get all product";
+    service.getall(res, sql, connection, message);
+  },
+  findId: (req, res) => {
+    let id = req.params.id;
+    let sql = "select * from products where id =?";
+    let message = "Find product by id";
+    service.findId(res, connection, sql, id, message);
+  },
+  create: (req, res) => {
+    let sql1 = "select * from products  where product_name = ?";
+    let sql2 = "insert into products set ?";
+    let search = req.body.product_name;
+    let product = req.body;
+    let message = "Product ready exists";
+    service.signup(res, connection, sql1, sql2, search, product, message);
   },
 };
 export default productController;
