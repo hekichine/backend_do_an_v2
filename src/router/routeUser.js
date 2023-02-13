@@ -1,7 +1,6 @@
 import express from "express";
 import userController from "../Controller/userController";
 import upload from "../middleware/upload";
-import connection from "../connectDB/connect";
 
 const router = express.Router();
 

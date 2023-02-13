@@ -16,14 +16,26 @@ const productController = {
   create: (req, res) => {
     let sql1 = "select * from products  where product_name = ?";
     let sql2 = "insert into products set ?";
+    let sql3 = "insert into productimages(product_id,image_url) value ?";
     let search = req.body.product_name;
     let product = req.body;
     let message = "Product ready exists";
-    service.signup(res, connection, sql1, sql2, search, product, message);
+    let listImg = req.files;
+
+    service.addProduct(
+      res,
+      connection,
+      sql1,
+      sql2,
+      search,
+      product,
+      listImg,
+      sql3,
+      message
+    );
   },
   update: (req, res) => {
     let product = req.body;
-
     let sql = "update products set ? where id =?";
     service.update(res, connection, sql, product);
   },

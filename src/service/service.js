@@ -116,5 +116,58 @@ let service = {
       });
     });
   },
+  addProduct: (
+    res,
+    connection,
+    sql1,
+    sql2,
+    search,
+    data,
+    listImg,
+    sql3,
+    message
+  ) => {
+    // console.log(sql1 + " " + sql2 + " " + search + " " + data + " " + message);
+    connection.query(sql1, [search], (err, rows) => {
+      if (rows.length > 0) {
+        return res.status(200).json({
+          message: message,
+          error: 1,
+        });
+      } else {
+        connection.query(sql2, [data], (err, rows) => {
+          if (!err) {
+            // return res.status(200).json({
+            //   message: "Create new product successfully",
+            //   error: 0,
+            //   product: rows.insertId,
+            // });
+            let pr_id = rows.insertId;
+            connection.query(
+              sql3,
+              [
+                listImg.map((item) => {
+                  return [pr_id, item.originalname];
+                }),
+              ],
+              (err, rows) => {
+                if (!err) {
+                  return res.status(200).json({
+                    message: "Create new product successfully",
+                    error: 0,
+                  });
+                }
+              }
+            );
+          } else {
+            return res.status(200).json({
+              message: "Server error",
+              error: 1,
+            });
+          }
+        });
+      }
+    });
+  },
 };
 export default service;
