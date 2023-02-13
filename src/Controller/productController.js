@@ -21,5 +21,11 @@ const productController = {
     let message = "Product ready exists";
     service.signup(res, connection, sql1, sql2, search, product, message);
   },
+  update: (req, res) => {
+    let product = req.body;
+
+    let sql = "update products set ? where id =?";
+    service.update(res, connection, sql, product);
+  },
 };
 export default productController;
