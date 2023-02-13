@@ -3,9 +3,14 @@ import service from "../service/service";
 const productController = {
   getAll: (req, res) => {
     let sql = "select * from products";
+    let sql2 = "select * from products limit ";
 
     let message = "Get all product";
-    service.getall(res, sql, connection, message);
+
+    let page = req.query.page ? Number(req.query.page) : 1;
+    let limit = req.query.limit ? Number(req.query.limit) : 5;
+
+    service.getall(res, sql, sql2, connection, page, limit, message);
   },
   findId: (req, res) => {
     let id = req.params.id;

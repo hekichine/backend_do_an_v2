@@ -1,25 +1,51 @@
+let itemPerPages = 3;
 let service = {
-  getall: (res, sql, connection, message) => {
+  getall: (res, sql, sql2, connection, page, limit, message) => {
     connection.query(sql, (err, rows) => {
       if (!err) {
         if (rows) {
+          if (limit > 10) {
+            limit = 10;
+          } else if (limit <= 0) {
+            limit = 3;
+          }
+          let numPages = Math.ceil(rows.length / limit);
+          if (page > numPages) {
+            page = numPages;
+          } else if (page <= 0) {
+            page = 1;
+          }
+          if (limit > 10) {
+            limit = 10;
+          } else if (limit <= 0) {
+            limit = 3;
+          }
+          const start = (page - 1) * limit;
+          connection.query(sql2 + `${start},${limit}`, (err, rows) => {
+            if (err) {
+              throw err;
+            }
+            return res.status(200).json({
+              message: message,
+              error: 0,
+              pageCount: numPages,
+              rows: rows,
+            });
+          });
+        } else {
           return res.status(200).json({
             message: message,
-            error: 0,
-            rows: rows,
+            error: 1,
+            rows: null,
           });
         }
+      } else {
         return res.status(200).json({
-          message: message,
+          message: "Server Error",
           error: 1,
           rows: null,
         });
       }
-      return res.status(200).json({
-        message: "Server Error",
-        error: 1,
-        rows: null,
-      });
     });
   },
   signup: (res, connection, sql1, sql2, search, data, message) => {

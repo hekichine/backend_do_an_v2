@@ -14,7 +14,10 @@ const userController = {
   getAll: (req, res) => {
     let sql = "select * from users";
     let message = "get all users";
-    service.getall(res, sql, connection, message);
+    let sql2 = "select * from users limit ";
+    let page = req.query.page ? Number(req.query.page) : 1;
+    let limit = req.query.limit ? Number(req.query.limit) : 5;
+    service.getall(res, sql, sql2, connection, page, limit, message);
   },
   signin: (req, res) => {
     let user = req.body;
