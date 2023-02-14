@@ -19,7 +19,7 @@ const initUserRoute = (app) => {
   //delete user
   router.delete("/delete/:id", userController.delete);
   //update user
-  router.post("/update", upload.single("user_avt"), userController.update);
+  router.post("/update", upload.single("user_image"), userController.update);
 
   app.use("/api/user", router);
 };

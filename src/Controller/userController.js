@@ -32,7 +32,7 @@ const userController = {
   update: (req, res) => {
     let user = req.body;
     if (req.file && req.file.originalname) {
-      user.user_avt = req.file.originalname;
+      user.user_image = req.file.originalname;
     }
     let sql = "update users set ? where id =?";
     service.update(res, connection, sql, user);

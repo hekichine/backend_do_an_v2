@@ -4,12 +4,13 @@ let service = {
     connection.query(sql, (err, rows) => {
       if (!err) {
         if (rows) {
-          if (limit > 10) {
-            limit = 10;
+          if (limit > 20) {
+            limit = 20;
           } else if (limit <= 0) {
-            limit = 3;
+            limit = 5;
           }
-          let numPages = Math.ceil(rows.length / limit);
+          let dataCount = rows.length;
+          let numPages = Math.ceil(dataCount / limit);
           if (page > numPages) {
             page = numPages;
           } else if (page <= 0) {
@@ -29,6 +30,7 @@ let service = {
               message: message,
               error: 0,
               pageCount: numPages,
+              dataCount: dataCount,
               rows: rows,
             });
           });
