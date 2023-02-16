@@ -23,33 +23,32 @@ const initProductRoute = (app) => {
     productController.create
   );
 
-  // upload multi multer
-  // router.post("/multi", upload.array("image_product", 4), (req, res) => {
-  //   let data = req.files;
-  //   let id = 5;
-  //   connection.query(
-  //     "insert into test(pr_id,img_url) value ?",
-  //     [
-  //       data.map((item) => {
-  //         return [id, item.originalname];
-  //       }),
-  //     ],
-  //     (err, rows) => {
-  //       if (!err) {
-  //         if (rows) {
-  //           return res.status(200).json({
-  //             success: "oke",
-  //           });
-  //         }
-  //       }
-  //       return res.status(200).json({
-  //         err,
-  //       });
-  //     }
-  //   );
-  // });
-
   app.use("/api/product", router);
 };
 
 export default initProductRoute;
+// upload multi multer
+// router.post("/multi", upload.array("image_product", 4), (req, res) => {
+//   let data = req.files;
+//   let id = 5;
+//   connection.query(
+//     "insert into test(pr_id,img_url) value ?",
+//     [
+//       data.map((item) => {
+//         return [id, item.originalname];
+//       }),
+//     ],
+//     (err, rows) => {
+//       if (!err) {
+//         if (rows) {
+//           return res.status(200).json({
+//             success: "oke",
+//           });
+//         }
+//       }
+//       return res.status(200).json({
+//         err,
+//       });
+//     }
+//   );
+// });

@@ -1,16 +1,22 @@
 import connection from "../connectDB/connect";
 import service from "../service/service";
-const productController = {
+const categoryController = {
   getAll: (req, res) => {
-    let sql = "select * from products";
-    let sql2 = "select * from products limit ";
+    let sql = "select * from categories";
 
-    let message = "Get all product";
-
-    let page = req.query.page ? Number(req.query.page) : 1;
-    let limit = req.query.limit ? Number(req.query.limit) : 5;
-
-    service.getall(res, sql, sql2, connection, page, limit, message);
+    let message = "Get all category";
+    connection.query(sql, (err, rows) => {
+      if (err) {
+        throw err;
+      }
+      if (rows) {
+        return res.status(200).json({
+          message: message,
+          error: 0,
+          rows: rows,
+        });
+      }
+    });
   },
   findId: (req, res) => {
     let id = req.params.id;
@@ -24,7 +30,6 @@ const productController = {
     let sql3 = "insert into productimages(product_id,image_url) value ?";
     let search = req.body.product_name;
     let product = req.body;
-    product.product_image = req.files[0].originalname;
     let message = "Product ready exists";
     let listImg = req.files;
 
@@ -46,4 +51,4 @@ const productController = {
     service.update(res, connection, sql, product);
   },
 };
-export default productController;
+export default categoryController;

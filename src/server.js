@@ -6,6 +6,7 @@ import initProductRoute from "./router/routeProduct";
 
 import initUserRoute from "./router/routeUser";
 import initWebRouter from "./router/webRouter";
+import initCategoryRouter from "./router/categoryRouter";
 
 require("dotenv").config();
 
@@ -23,6 +24,7 @@ app.use("", express.static("uploads"));
 initWebRouter(app);
 initUserRoute(app);
 initProductRoute(app);
+initCategoryRouter(app);
 
 app.listen(port, () => {
   console.log(`server is running on http://localhost:${port}`);
