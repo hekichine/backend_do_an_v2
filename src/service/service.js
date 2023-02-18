@@ -4,8 +4,8 @@ let service = {
     connection.query(sql, (err, rows) => {
       if (!err) {
         if (rows) {
-          if (limit > 20) {
-            limit = 20;
+          if (limit > 30) {
+            limit = 30;
           } else if (limit <= 0) {
             limit = 5;
           }
@@ -42,7 +42,10 @@ let service = {
           });
         }
       } else {
-        throw err;
+        return res.status(200).json({
+          message: "Server Error",
+          error: 1,
+        });
       }
     });
   },
@@ -127,19 +130,54 @@ let service = {
             error: 0,
             rows: rows,
           });
+        } else {
+          return res.status(200).json({
+            message: "Not found",
+            error: 1,
+            rows: null,
+          });
         }
+      } else {
         return res.status(200).json({
-          message: "Not found",
+          message: "Server error",
           error: 1,
-          rows: null,
         });
       }
-      return res.status(200).json({
-        message: "Server error",
-        error: 1,
-      });
     });
   },
+  findProduct: (res, connection, sql, sql2, id, message) => {
+    connection.query(sql, id, (err, rows) => {
+      if (!err) {
+        if (rows) {
+          let product = rows;
+          connection.query(sql2, id, (err, rows) => {
+            if (!err) {
+              if (rows) {
+                return res.status(200).json({
+                  message: message,
+                  error: 0,
+                  product: product,
+                  productImages: rows,
+                });
+              }
+            }
+          });
+        } else {
+          return res.status(200).json({
+            message: "Not found product",
+            error: 1,
+            rows: null,
+          });
+        }
+      } else {
+        return res.status(200).json({
+          message: "Server error",
+          error: 1,
+        });
+      }
+    });
+  },
+
   addProduct: (
     res,
     connection,

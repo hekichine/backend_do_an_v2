@@ -11,7 +11,10 @@ const initUserRoute = (app) => {
       message: "api book store",
     });
   });
+  // get all user
   router.get("/getall", userController.getAll);
+  // find user
+  router.get("/find/:id", userController.findId);
   // register
   router.post("/signup", userController.signup);
   //login

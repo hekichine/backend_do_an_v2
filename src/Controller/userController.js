@@ -37,6 +37,20 @@ const userController = {
     let sql = "update users set ? where id =?";
     service.update(res, connection, sql, user);
   },
+  findId: (req, res) => {
+    let { id } = req.params;
+    console.log(id);
+    if (!id) {
+      return res.status(200).json({
+        message: "ID invalid",
+        error: 1,
+      });
+    } else {
+      let sql = "select * from users where id=?";
+      let message = "find user";
+      service.findId(res, connection, sql, id, message);
+    }
+  },
 };
 
 export default userController;

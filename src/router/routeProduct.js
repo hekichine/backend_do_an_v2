@@ -15,7 +15,7 @@ const initProductRoute = (app) => {
   // get all product
   router.get("/getall", productController.getAll);
   // find by id
-  router.get("/findId/:id", productController.findId);
+  router.get("/find/:id", productController.findId);
   //create product
   router.post(
     "/add",

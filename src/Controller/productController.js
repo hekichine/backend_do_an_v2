@@ -15,8 +15,9 @@ const productController = {
   findId: (req, res) => {
     let id = req.params.id;
     let sql = "select * from products where id =?";
+    let sql2 = "select * from productimages where product_id = ?";
     let message = "Find product by id";
-    service.findId(res, connection, sql, id, message);
+    service.findProduct(res, connection, sql, sql2, id, message);
   },
   create: (req, res) => {
     let sql1 = "select * from products  where product_name = ?";
