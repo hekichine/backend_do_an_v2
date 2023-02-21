@@ -46,5 +46,56 @@ const productController = {
     let sql = "update products set ? where id =?";
     service.update(res, connection, sql, product);
   },
+  getComment: (req, res) => {
+    let id = req.params.id;
+    let sql = `select user.fullname , user.user_image ,cmt.id, cmt.content,cmt.timestamp from users as user , comments as cmt where cmt.user_id = user.id and cmt.product_id = ?`;
+    connection.query(sql, [id], (err, rows) => {
+      if (!err) {
+        return res.status(200).json({
+          message: "Get comments for product",
+          error: 0,
+          comment: rows,
+        });
+      } else {
+        return res.status(200).json({
+          message: "err",
+          error: 1,
+        });
+      }
+    });
+  },
+  addComment: (req, res) => {
+    let comment = req.body;
+    let sql = "insert into comments set ?";
+    connection.query(sql, comment, (err, rows) => {
+      if (!err) {
+        return res.status(200).json({
+          message: "Comment success",
+          error: 0,
+        });
+      } else {
+        return res.status(200).json({
+          message: "Failed to comment! Server error",
+          error: 1,
+        });
+      }
+    });
+  },
+  allComment: (req, res) => {
+    let sql = "select * from comments";
+    let sql2 = "select * from comments limit ";
+
+    let message = "Get all comments";
+
+    let page = req.query.page ? Number(req.query.page) : 1;
+    let limit = req.query.limit ? Number(req.query.limit) : 5;
+
+    service.getall(res, sql, sql2, connection, page, limit, message);
+  },
+  deleteComment: (req, res) => {
+    let id = req.params.id;
+    let sql = "delete from comments where id =?";
+    service.delete(res, connection, sql, id);
+  },
 };
 export default productController;

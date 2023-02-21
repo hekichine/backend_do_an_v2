@@ -22,6 +22,14 @@ const initProductRoute = (app) => {
     upload.array("productImages", 4),
     productController.create
   );
+  // get comment
+  router.get("/comment/:id", productController.getComment);
+  // add comment
+  router.post("/comment/add", productController.addComment);
+  //get all comment
+  router.get("/comment", productController.allComment);
+  // delete comment
+  router.delete("/comment/delete/:id", productController.deleteComment);
 
   app.use("/api/product", router);
 };

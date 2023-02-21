@@ -4,11 +4,6 @@ let service = {
     connection.query(sql, (err, rows) => {
       if (!err) {
         if (rows) {
-          if (limit > 30) {
-            limit = 30;
-          } else if (limit <= 0) {
-            limit = 5;
-          }
           let dataCount = rows.length;
           let numPages = Math.ceil(dataCount / limit);
           if (page > numPages) {
@@ -16,8 +11,8 @@ let service = {
           } else if (page <= 0) {
             page = 1;
           }
-          if (limit > 10) {
-            limit = 10;
+          if (limit > 30) {
+            limit = 100;
           } else if (limit <= 0) {
             limit = 3;
           }

@@ -7,6 +7,7 @@ import initProductRoute from "./router/routeProduct";
 import initUserRoute from "./router/routeUser";
 import initWebRouter from "./router/webRouter";
 import initCategoryRouter from "./router/categoryRouter";
+import initCollectionRouter from "./router/collectionRouter";
 
 require("dotenv").config();
 
@@ -25,6 +26,7 @@ initWebRouter(app);
 initUserRoute(app);
 initProductRoute(app);
 initCategoryRouter(app);
+initCollectionRouter(app);
 
 app.listen(port, () => {
   console.log(`server is running on http://localhost:${port}`);
