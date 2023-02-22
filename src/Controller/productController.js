@@ -1,6 +1,32 @@
 import connection from "../connectDB/connect";
 import service from "../service/service";
 const productController = {
+  getSale: (req, res) => {
+    let sql = "select * from products where sale > 0";
+    let message = "Get product sale";
+    connection.query(sql, (err, rows) => {
+      if (!err) {
+        if (rows) {
+          return res.status(200).json({
+            message: message,
+            error: 0,
+            sale: rows,
+          });
+        } else {
+          return res.status(200).json({
+            message: message,
+            sale: null,
+            error: 0,
+          });
+        }
+      } else {
+        return res.status(200).json({
+          message: "Server error",
+          error: 1,
+        });
+      }
+    });
+  },
   getAll: (req, res) => {
     let sql = "select * from products";
     let sql2 = "select * from products limit ";
@@ -28,6 +54,7 @@ const productController = {
     product.product_image = req.files[0].originalname;
     let message = "Product ready exists";
     let listImg = req.files;
+    // console.log(product);
 
     service.addProduct(
       res,
@@ -48,7 +75,7 @@ const productController = {
   },
   getComment: (req, res) => {
     let id = req.params.id;
-    let sql = `select user.fullname , user.user_image ,cmt.id, cmt.content,cmt.timestamp from users as user , comments as cmt where cmt.user_id = user.id and cmt.product_id = ?`;
+    let sql = `select user.fullname, user.user_image ,cmt.id, cmt.content,cmt.timestamp, cmt.user_id from users as user , comments as cmt where cmt.user_id = user.id and cmt.product_id = ?`;
     connection.query(sql, [id], (err, rows) => {
       if (!err) {
         return res.status(200).json({

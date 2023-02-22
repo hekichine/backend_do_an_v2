@@ -29,7 +29,10 @@ const initProductRoute = (app) => {
   //get all comment
   router.get("/comment", productController.allComment);
   // delete comment
-  router.delete("/comment/delete/:id", productController.deleteComment);
+  router.delete("/comment/delete", productController.deleteComment);
+  // getl sale
+  router.get("/sale", productController.getSale);
+  // update
 
   app.use("/api/product", router);
 };
