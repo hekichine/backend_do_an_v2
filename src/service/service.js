@@ -1,4 +1,3 @@
-let itemPerPages = 3;
 let service = {
   getall: (res, sql, sql2, connection, page, limit, message) => {
     connection.query(sql, (err, rows) => {

@@ -14,6 +14,7 @@ const initProductRoute = (app) => {
   });
   // get all product
   router.get("/getall", productController.getAll);
+  router.get("/getallHome", productController.getAllHome);
   // find by id
   router.get("/find/:id", productController.findId);
   //create product
@@ -22,6 +23,8 @@ const initProductRoute = (app) => {
     upload.array("productImages", 4),
     productController.create
   );
+  //update product
+  router.post("/update", productController.update);
   // get comment
   router.get("/comment/:id", productController.getComment);
   // add comment
@@ -32,7 +35,8 @@ const initProductRoute = (app) => {
   router.delete("/comment/delete", productController.deleteComment);
   // getl sale
   router.get("/sale", productController.getSale);
-  // update
+  // get prodcut int home
+  router.get("/getproduct", productController.getHome);
 
   app.use("/api/product", router);
 };

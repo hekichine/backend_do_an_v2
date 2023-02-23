@@ -26,7 +26,7 @@ initWebRouter(app);
 initUserRoute(app);
 initProductRoute(app);
 initCategoryRouter(app);
-initCollectionRouter(app);
+// initCollectionRouter(app);
 
 app.listen(port, () => {
   console.log(`server is running on http://localhost:${port}`);

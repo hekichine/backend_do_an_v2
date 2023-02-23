@@ -12,6 +12,8 @@ const initCollectionRouter = (app) => {
     upload.single("collection_image"),
     collectionController.create
   );
+  // get product in collection
+  router.get("/productlist/:id", collectionController.getproduct);
 
   app.use("/api/collection", router);
 };

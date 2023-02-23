@@ -2,7 +2,7 @@ import connection from "../connectDB/connect";
 import service from "../service/service";
 const productController = {
   getSale: (req, res) => {
-    let sql = "select * from products where sale > 0";
+    let sql = "select * from products where sale > 0 and status =1";
     let message = "Get product sale";
     connection.query(sql, (err, rows) => {
       if (!err) {
@@ -27,13 +27,50 @@ const productController = {
       }
     });
   },
+  getHome: (req, res) => {
+    let sql = "select * from products where sell > 0 and status =1";
+    let message = "Get product sell";
+    connection.query(sql, (err, rows) => {
+      if (!err) {
+        if (rows) {
+          return res.status(200).json({
+            message: message,
+            error: 0,
+            sell: rows,
+          });
+        } else {
+          return res.status(200).json({
+            message: message,
+            sell: null,
+            error: 0,
+          });
+        }
+      } else {
+        return res.status(200).json({
+          message: "Server error",
+          error: 1,
+        });
+      }
+    });
+  },
   getAll: (req, res) => {
-    let sql = "select * from products";
+    let sql = "select * from products s";
     let sql2 = "select * from products limit ";
 
     let message = "Get all product";
 
     let page = req.query.page ? Number(req.query.page) : 1;
+    let limit = req.query.limit ? Number(req.query.limit) : 5;
+
+    service.getall(res, sql, sql2, connection, page, limit, message);
+  },
+  getAllHome: (req, res) => {
+    let sql = "select * from products";
+    let sql2 = "select * from products where status =1 limit ";
+
+    let message = "Get all product";
+
+    let page = req.query.page ? Number(req.query.page) : 0;
     let limit = req.query.limit ? Number(req.query.limit) : 5;
 
     service.getall(res, sql, sql2, connection, page, limit, message);
@@ -71,7 +108,14 @@ const productController = {
   update: (req, res) => {
     let product = req.body;
     let sql = "update products set ? where id =?";
-    service.update(res, connection, sql, product);
+    if (product) {
+      service.update(res, connection, sql, product);
+    } else {
+      return res.status(200).json({
+        message: "Update failled",
+        error: 1,
+      });
+    }
   },
   getComment: (req, res) => {
     let id = req.params.id;
