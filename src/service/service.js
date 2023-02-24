@@ -219,6 +219,7 @@ let service = {
             return res.status(200).json({
               message: "Server error",
               error: 1,
+              err: err,
             });
           }
         });
