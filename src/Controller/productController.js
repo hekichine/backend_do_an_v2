@@ -54,7 +54,7 @@ const productController = {
     });
   },
   getAll: (req, res) => {
-    let sql = "select * from products s";
+    let sql = "select * from products";
     let sql2 = "select * from products limit ";
 
     let message = "Get all product";
